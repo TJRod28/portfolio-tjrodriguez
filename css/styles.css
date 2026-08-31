@@ -9,7 +9,7 @@
     padding: 0;
 }
 
-img{
+img {
     max-width: 100%;
     height: auto;
     display: block;
@@ -17,7 +17,8 @@ img{
 /* ==========================
    2. DESIGN TOKENS
    ========================== */
-:root {
+   
+   :root {
     /* Color */
     --color-bg: #fafafa;
     --color-surface: #ffffff;
@@ -35,7 +36,7 @@ img{
     --text-base: 1rem;
     --text-h3: 1.25rem;
     --text-h2: 1.5rem;
-    --texth1: 2.25rem;
+    --text-h1: 2.25rem;
     --leading-body: 1.6;
     --leading-heading: 1.2;
 
@@ -46,6 +47,7 @@ img{
 /* ==========================
    3. BASE ELEMENT STYLES
    ========================== */
+   
    body {
     background-color: var(--color-bg);
     color: var(--color-text);
@@ -58,13 +60,14 @@ img{
    h3 { font-size: var(--text-h3); line-height: var(--leading-heading); }
 
    h1, h2, h3 { margin-bottom: var(--space-sm); }
-   p { margin-bottom: var(--spacemd); }
+   p { margin-bottom: var(--space-md); }
    p:last-child { margin-bottom: 0; }
 
    a { color: var(--color-accent); }
 /* ==========================
    4. LAYOUT
    ========================== */
+   
    body {
     max-width: var(--page-width);
     margin: 0 auto;
