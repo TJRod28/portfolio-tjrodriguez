@@ -43,6 +43,11 @@ img {
     /* Layout */
     --page-width: 64rem;
     --reading-width: 70ch;
+
+    /* existing tokens */
+    --font-stack: system-ui, "Segoe UI", Tahoma, sans-serif;
+    --colorsurface-alt: #f1f5f9;
+    --radius-md: 8px;
 }
 /* ==========================
    3. BASE ELEMENT STYLES
