@@ -28,7 +28,7 @@ img {
 
     /* Spacing - a modular scale */
     --space-sm: 0.5rem;
-    --space-med: 1rem;
+    --space-md: 1rem;
     --space-lg: 1.5rem;
     --space-xl: 2rem;
 
@@ -46,7 +46,7 @@ img {
 
     /* existing tokens */
     --font-stack: system-ui, "Segoe UI", Tahoma, sans-serif;
-    --colorsurface-alt: #f1f5f9;
+    --color-surface-alt: #f1f5f9;
     --radius-md: 8px;
     --color-border: #e5e7eb;
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
