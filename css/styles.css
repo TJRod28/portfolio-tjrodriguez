@@ -166,6 +166,16 @@ img {
       box-shadow: var(--shadow-sm);
    }
 
+/* ==========================
+   New code that works with shaping images in project boxes
+   ========================== */
+   .project-card img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-md);
+   }
+
 .nav-container {
    display: flex;
    justify-content: space-between;
