@@ -23,11 +23,11 @@ img {
    
    :root {
     /* Color */
-    --color-bg: #fafafa;
+    --color-bg: #f6f2fb;          /* pale lavender: the "daylight" version of the cave */
     --color-surface: #ffffff;
-    --color-text: #1f2937;
-    --color-muted: #4b5563;
-    --color-accent: #4338ca;
+    --color-text: #1f1630;
+    --color-muted: #4f4563;
+    --color-accent: #4d1979;      /* TCU purple, the same purple the Undertale site glows with */
 
     /* Spacing - a modular scale */
     --space-sm: 0.5rem;
@@ -50,26 +50,45 @@ img {
     /* existing tokens */
     --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
     --font-serif: 'Lora', Georgia, serif;
-    --color-surface-alt: #f1f5f9;
+    --color-surface-alt: #f1ebf8;
     --radius-md: 8px;
-    --color-border: #e5e7eb;
+    --color-border: #e2d8ef;
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);   /* used when a card lifts on hover */
+    --shadow-lg: 0 10px 20px rgba(77, 25, 121, 0.18);   /* purple-tinted lift on hover */
+
+    /* Page background, adapted from the Undertale site I developed for Dr. Helms' History of Video Games class. The particular style is borrowed from the "cave" background of the Undertale site.
+       Layers are listed top to bottom, each one a see-through gradient:
+         1. a purple glow pouring down from the top center
+         2. a faint blue glow in the lower-left corner
+         3. a purple glow on the right side
+       (The Undertale site also had faint grid lines; they're left out here
+       because they showed up as boxes on the light background.)
+       Light mode uses the same layers at softer strengths on lavender. */
+    --bg-layers:
+        radial-gradient(ellipse 90% 45% at 50% 0%, rgba(77, 25, 121, 0.16) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 55% at 5% 90%, rgba(74, 158, 255, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 50% at 95% 55%, rgba(107, 47, 160, 0.10) 0%, transparent 55%);
 }
 
 /* Dark mode (Lab 19 pattern): same token names, new values.
    js/app.js adds class="theme-dark" to <html>, and every rule that
    uses these tokens repaints itself on both pages. */
 html.theme-dark {
-    --color-bg: #111827;
-    --color-surface: #1f2937;
-    --color-surface-alt: #273244;
-    --color-text: #f3f4f6;
-    --color-muted: #cbd5e1;
-    --color-accent: #a5b4fc;      /* lighter indigo so links stay readable on dark */
-    --color-border: #374151;
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
+    --color-bg: #07070f;          /* the Undertale site's near-black */
+    --color-surface: #120e1f;     /* deep purple-black cards */
+    --color-surface-alt: #1a1430;
+    --color-text: #ece8f4;
+    --color-muted: #b8aecb;
+    --color-accent: #c4a6e8;      /* light purple so links stay readable on dark */
+    --color-border: #2e2350;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 24px rgba(107, 47, 160, 0.35);   /* a purple glow instead of a shadow */
+
+    /* Same layers as light mode, at the Undertale site's original strengths */
+    --bg-layers:
+        radial-gradient(ellipse 90% 45% at 50% 0%, rgba(77, 25, 121, 0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 55% at 5% 90%, rgba(74, 158, 255, 0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 50% at 95% 55%, rgba(107, 47, 160, 0.12) 0%, transparent 55%);
 }
 
 /* ==========================
@@ -80,6 +99,8 @@ html.theme-dark {
     font-family: var(--font-stack);
     /* existing Lab 05 declarations */
     background-color: var(--color-bg);
+    background-image: var(--bg-layers);   /* the glows and grid from section 2 */
+    background-attachment: fixed;         /* glows stay put while the page scrolls */
     color: var(--color-text);
     font-size: var(--text-base);
     line-height: var(--leading-body);
@@ -125,6 +146,20 @@ html.theme-dark {
       background-color: var(--color-surface-alt);
       margin-bottom: var(--space-lg);
       flex-wrap: wrap;
+      position: relative;          /* lets the purple line below sit at the top edge */
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+   }
+   /* Glowing purple line across the top of the header (also from the Undertale site):
+      fades in from nothing, peaks in the middle, fades back out. */
+   header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 0%, #4d1979 25%, #6b2fa0 50%, #4d1979 75%, transparent 100%);
    }
    .header-text { flex: 1; min-width: 16rem; }
    .header-pic {
