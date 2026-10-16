@@ -54,6 +54,22 @@ img {
     --radius-md: 8px;
     --color-border: #e5e7eb;
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15);   /* used when a card lifts on hover */
+}
+
+/* Dark mode (Lab 19 pattern): same token names, new values.
+   js/app.js adds class="theme-dark" to <html>, and every rule that
+   uses these tokens repaints itself on both pages. */
+html.theme-dark {
+    --color-bg: #111827;
+    --color-surface: #1f2937;
+    --color-surface-alt: #273244;
+    --color-text: #f3f4f6;
+    --color-muted: #cbd5e1;
+    --color-accent: #a5b4fc;      /* lighter indigo so links stay readable on dark */
+    --color-border: #374151;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================
@@ -180,11 +196,23 @@ img {
 /* ==========================
    New code that works with shaping images in project boxes
    ========================== */
+   /* Professor's note: images were close but not the same height.
+      Why: the screenshots have different shapes (some nearly square,
+      some very wide), and height: auto keeps each one's own shape.
+      Fix: aspect-ratio gives every image the SAME 2:1 box (close to the
+      shape of most of the screenshots, so little gets trimmed), and
+      object-fit: cover fills that box without stretching, trimming the
+      extra edges instead. object-position: left top keeps the top-left
+      corner in view, where each site's title is. Same image height means
+      the titles and text below all start on the same line. */
    .project-card img {
       width: 100%;
-      height: auto;
+      aspect-ratio: 2 / 1;
+      object-fit: cover;
+      object-position: left top;
       border-radius: var(--radius-md);
       margin-bottom: var(--space-md);
+      border: 1px solid var(--color-border);   /* edges stay visible on white screenshots */
    }
 
 .nav-container {
@@ -200,4 +228,76 @@ img {
    font-weight: bold;
    color: var(--color-text);
    text-decoration: none;
+}
+
+/* ==========================
+   5. CARD HOVER (skills and My Work)
+   Cards lift up and their shadow grows when the cursor is over them.
+   :focus-within does the same for keyboard users when they tab to a
+   link inside a card, so they get the same visual feedback.
+   ========================== */
+.skill-card,
+.project-card {
+   transition: transform 0.2s ease, box-shadow 0.2s ease,
+               background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.skill-card:hover,
+.skill-card:focus-within,
+.project-card:hover,
+.project-card:focus-within {
+   transform: translateY(-6px);         /* moves the card up 6px */
+   box-shadow: var(--shadow-lg);
+}
+
+/* Skill cards get a thin border so they keep their edges in dark mode */
+.skill-card { border: 1px solid var(--color-border); }
+
+/* ==========================
+   6. THEME TOGGLE BUTTON
+   ========================== */
+.theme-toggle {
+   font: inherit;
+   padding: var(--space-sm) var(--space-md);
+   background-color: transparent;
+   color: var(--color-text);
+   border: 1px solid var(--color-border);
+   border-radius: var(--radius-md);
+   cursor: pointer;
+}
+
+.theme-toggle:hover { border-color: var(--color-accent); }
+
+.theme-toggle:focus-visible {
+   outline: 2px solid var(--color-accent);
+   outline-offset: 2px;
+}
+
+/* Colors fade instead of snapping when the theme changes */
+body,
+header,
+.header-pic,
+.theme-toggle {
+   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ==========================
+   7. REDUCED MOTION
+   (Kept last so it overrides the movement above.)
+   Visitors who turn on "reduce motion" in their device settings
+   still get the bigger shadow on hover, just without the movement.
+   ========================== */
+@media (prefers-reduced-motion: reduce) {
+   *,
+   *::before,
+   *::after {
+      transition: none !important;
+   }
+
+   .skill-card:hover,
+   .skill-card:focus-within,
+   .project-card:hover,
+   .project-card:focus-within {
+      transform: none;
+   }
 }
